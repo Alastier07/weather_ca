@@ -34,12 +34,135 @@ class WeatherWidget extends StatelessWidget with Util {
     final String humidity = '${weather.averageHumidity}%';
     final String sunrise = weather.sunrise;
     final String sunset = weather.sunset;
+    final double screenHeight = MediaQuery.of(context).size.height -
+        Scaffold.of(context).appBarMaxHeight!;
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Stack(
         children: [
-          if (isPortrait)
+          SingleChildScrollView(
+            physics: isPortrait ? const NeverScrollableScrollPhysics() : null,
+            child: SizedBox(
+              height: screenHeight,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    children: [
+                      if (!isPortrait)
+                        IconButton(
+                          onPressed: isFirstPage ? null : previousPage,
+                          icon: const Icon(
+                            Icons.keyboard_arrow_left,
+                            size: 30,
+                          ),
+                        ),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Text(
+                              day,
+                              style: textTheme(context).headlineSmall,
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              date,
+                              style: textTheme(context).titleMedium,
+                            ),
+                          ],
+                        ),
+                      ),
+                      if (!isPortrait)
+                        IconButton(
+                          onPressed: isLastPage ? null : nextPage,
+                          icon: const Icon(
+                            Icons.keyboard_arrow_right,
+                            size: 30,
+                          ),
+                        ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 120,
+                        height: 120,
+                        child: CachedNetworkImage(
+                          imageUrl: imageUrl,
+                          placeholder: (context, url) => const Center(
+                            child: SizedBox(
+                              height: 50,
+                              width: 50,
+                              child: CircularProgressIndicator(),
+                            ),
+                          ),
+                          errorWidget: (context, url, error) => const Center(
+                            child: Icon(Icons.image_not_supported_rounded),
+                          ),
+                        ),
+                      ),
+                      Text(
+                        temperature,
+                        style: textTheme(context).displayMedium?.copyWith(
+                              color: textTheme(context).bodyMedium?.color,
+                            ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    condition,
+                    style: textTheme(context).titleLarge,
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: <Widget>[
+                      _otherDetailWidget(
+                        title: 'Wind',
+                        value: wind,
+                        ctx: context,
+                      ),
+                      _otherDetailWidget(
+                        title: 'Humidity',
+                        value: humidity,
+                        ctx: context,
+                      ),
+                      if (!isPortrait) ...[
+                        _otherDetailWidget(
+                          title: 'Sunrise',
+                          value: sunrise,
+                          ctx: context,
+                        ),
+                        _otherDetailWidget(
+                          title: 'Sunset',
+                          value: sunset,
+                          ctx: context,
+                        ),
+                      ]
+                    ],
+                  ),
+                  if (isPortrait)
+                    Row(
+                      children: <Widget>[
+                        _otherDetailWidget(
+                          title: 'Sunrise',
+                          value: sunrise,
+                          ctx: context,
+                        ),
+                        _otherDetailWidget(
+                          title: 'Sunset',
+                          value: sunset,
+                          ctx: context,
+                        ),
+                      ],
+                    ),
+                ],
+              ),
+            ),
+          ),
+          if (isPortrait) ...[
             Align(
               alignment: Alignment.topCenter,
               child: IconButton(
@@ -50,122 +173,6 @@ class WeatherWidget extends StatelessWidget with Util {
                 ),
               ),
             ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                children: [
-                  if (!isPortrait)
-                    IconButton(
-                      onPressed: isFirstPage ? null : previousPage,
-                      icon: const Icon(
-                        Icons.keyboard_arrow_left,
-                        size: 30,
-                      ),
-                    ),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        Text(
-                          day,
-                          style: textTheme(context).headlineSmall,
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          date,
-                          style: textTheme(context).titleMedium,
-                        ),
-                      ],
-                    ),
-                  ),
-                  if (!isPortrait)
-                    IconButton(
-                      onPressed: isLastPage ? null : nextPage,
-                      icon: const Icon(
-                        Icons.keyboard_arrow_right,
-                        size: 30,
-                      ),
-                    ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 120,
-                    height: 120,
-                    child: CachedNetworkImage(
-                      imageUrl: imageUrl,
-                      placeholder: (context, url) => const Center(
-                        child: SizedBox(
-                          height: 50,
-                          width: 50,
-                          child: CircularProgressIndicator(),
-                        ),
-                      ),
-                      errorWidget: (context, url, error) => const Center(
-                        child: Icon(Icons.image_not_supported_rounded),
-                      ),
-                    ),
-                  ),
-                  Text(
-                    temperature,
-                    style: textTheme(context).displayMedium?.copyWith(
-                          color: textTheme(context).bodyMedium?.color,
-                        ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              Text(
-                condition,
-                style: textTheme(context).titleLarge,
-              ),
-              const SizedBox(height: 10),
-              Row(
-                children: <Widget>[
-                  _otherDetailWidget(
-                    title: 'Wind',
-                    value: wind,
-                    ctx: context,
-                  ),
-                  _otherDetailWidget(
-                    title: 'Humidity',
-                    value: humidity,
-                    ctx: context,
-                  ),
-                  if (!isPortrait) ...[
-                    _otherDetailWidget(
-                      title: 'Sunrise',
-                      value: sunrise,
-                      ctx: context,
-                    ),
-                    _otherDetailWidget(
-                      title: 'Sunset',
-                      value: sunset,
-                      ctx: context,
-                    ),
-                  ]
-                ],
-              ),
-              if (isPortrait)
-                Row(
-                  children: <Widget>[
-                    _otherDetailWidget(
-                      title: 'Sunrise',
-                      value: sunrise,
-                      ctx: context,
-                    ),
-                    _otherDetailWidget(
-                      title: 'Sunset',
-                      value: sunset,
-                      ctx: context,
-                    ),
-                  ],
-                ),
-            ],
-          ),
-          if (isPortrait)
             Align(
               alignment: Alignment.bottomCenter,
               child: IconButton(
@@ -176,6 +183,7 @@ class WeatherWidget extends StatelessWidget with Util {
                 ),
               ),
             ),
+          ],
         ],
       ),
     );

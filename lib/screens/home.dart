@@ -103,26 +103,29 @@ class _HomeScreenState extends State<HomeScreen> with Util {
                         ),
                       ],
                     )
-                  : Row(
-                      children: [
-                        CurrentWeatherWidget(
-                          weather: weatherWatchProvider.currentWeather,
-                        ),
-                        Expanded(
-                          child: Column(
-                            children: [
-                              LocationWidget(
-                                city: countryWatchProvider.city,
-                                lastUpdate: weatherWatchProvider
-                                    .currentWeather.lastUpdate,
-                              ),
-                              ForecastWeatherWidget(
-                                weathers: weatherWatchProvider.forecastWeather,
-                              ),
-                            ],
+                  : SingleChildScrollView(
+                      child: Row(
+                        children: [
+                          CurrentWeatherWidget(
+                            weather: weatherWatchProvider.currentWeather,
                           ),
-                        ),
-                      ],
+                          Expanded(
+                            child: Column(
+                              children: [
+                                LocationWidget(
+                                  city: countryWatchProvider.city,
+                                  lastUpdate: weatherWatchProvider
+                                      .currentWeather.lastUpdate,
+                                ),
+                                ForecastWeatherWidget(
+                                  weathers:
+                                      weatherWatchProvider.forecastWeather,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     )
               : ErrorScreen(
                   refreshFunction: () => _refreshFunction(
