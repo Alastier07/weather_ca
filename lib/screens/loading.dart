@@ -9,7 +9,7 @@ class LoadingScreen extends StatelessWidget {
       body: Center(
         child: Stack(
           alignment: Alignment.center,
-          children: const [
+          children: [
             Icon(Icons.cloud),
             SizedBox(
               width: 40,
