@@ -1,4 +1,4 @@
-name: WeatherCA
+name: weather_ca
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -57,12 +57,12 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/cab-weather-icon.png"
-  adaptive_icon_background: "#FFFFFF"
+  image_path: "assets/images/logo.png"
+  adaptive_icon_background: "#000000"
 
 flutter_native_splash:
-  image: assets/images/cab-weather-icon.png
-  color: "#FFFFFF"
+  image: assets/images/logo.png
+  color: "#000000"
 
   #color_dark: "#042a49"
   #background_image_dark: "assets/dark-background.png"
@@ -70,8 +70,8 @@ flutter_native_splash:
   #branding_dark: assets/dart_dark.png
 
   android_12:
-    image: assets/images/cab-weather-icon.png
-    color: "#FFFFFF"
+    image: assets/images/logo.png
+    color: "#000000"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
