@@ -29,11 +29,18 @@ class WeatherApp extends StatelessWidget {
               : theme.isDarkMode!
                   ? ThemeMode.dark
                   : ThemeMode.light,
-          home: showIntro ? IntroScreen(title: title) : const HomeScreen(),
-          // initialRoute: ,
+          initialRoute: showIntro ? IntroScreen.routeName : null,
+          home: const HomeScreen(),
           routes: {
             HomeScreen.routeName: (context) => const HomeScreen(),
           },
+          onGenerateRoute: (settings) => settings.name == IntroScreen.routeName
+              ? MaterialPageRoute(
+                  builder: (context) {
+                    return IntroScreen(title: title);
+                  },
+                )
+              : null,
         );
       },
     );
