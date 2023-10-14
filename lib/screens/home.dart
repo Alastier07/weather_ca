@@ -12,7 +12,7 @@ import 'error.dart';
 import 'loading.dart';
 
 class HomeScreen extends StatefulWidget {
-  static const routeName = '/home';
+  // static const routeName = '/home';
 
   const HomeScreen({super.key});
 

@@ -31,9 +31,9 @@ class WeatherApp extends StatelessWidget {
                   : ThemeMode.light,
           initialRoute: showIntro ? IntroScreen.routeName : null,
           home: const HomeScreen(),
-          routes: {
-            HomeScreen.routeName: (context) => const HomeScreen(),
-          },
+          // routes: {
+          //   HomeScreen.routeName: (context) => const HomeScreen(),
+          // },
           onGenerateRoute: (settings) => settings.name == IntroScreen.routeName
               ? MaterialPageRoute(
                   builder: (context) {

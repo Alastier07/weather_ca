@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/country_provider.dart';
-import '../screens/home.dart';
+// import '../screens/home.dart';
 
 class IntroScreen extends StatefulWidget {
   static const routeName = '/intro';
@@ -77,7 +77,7 @@ class _IntroScreenState extends State<IntroScreen> {
                         .read<CountryProvider>()
                         .setLocation(location == '' ? 'Manila' : location);
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                      HomeScreen.routeName,
+                      '/',
                       (route) => false,
                     );
                   },
