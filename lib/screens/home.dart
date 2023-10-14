@@ -43,7 +43,6 @@ class _HomeScreenState extends State<HomeScreen> with Util {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = context.read<ThemeProvider>();
     final countryWatchProvider = context.watch<CountryProvider>();
     final weatherWatchProvider = context.watch<WeatherProvider>();
     final weatherReadProvider = context.read<WeatherProvider>();
@@ -78,11 +77,17 @@ class _HomeScreenState extends State<HomeScreen> with Util {
                 icon: const Icon(
                   Icons.dark_mode,
                 ),
-                onPressed: () => themeProvider.setThemeMode(
-                  themeProvider.isDarkMode == null
-                      ? true
-                      : !themeProvider.isDarkMode!,
-                ),
+                onPressed: () {
+                  final themeProvider = context.read<ThemeProvider>();
+
+                  themeProvider.setThemeMode(
+                    themeProvider.isDarkMode == null
+                        ? ThemeMode.system == ThemeMode.dark
+                            ? true
+                            : false
+                        : !themeProvider.isDarkMode!,
+                  );
+                },
               ),
             ],
           ),
