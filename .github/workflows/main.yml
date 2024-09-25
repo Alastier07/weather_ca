@@ -39,7 +39,7 @@ jobs:
       # Create api_key.dart
       - name: Create api_key.dart
         run: |
-          echo "const String weatherKey = ${{ secrets.WEATHER_KEY }}" > lib/api_key.dart
+          echo "const String weatherKey = ${{ secrets.WEATHER_KEY }};" > lib/api_key.dart
 
       # Buildig APK
       - name: Build APK
