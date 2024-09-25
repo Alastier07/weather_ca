@@ -39,7 +39,7 @@ jobs:
       # Create api_key.dart
       - name: Create api_key.dart
         run: |
-          echo "const String weatherKey = ${{ secrets.WEATHER_KEY }};" > lib/api_key.dart
+          echo "const String weatherKey = '${{ secrets.WEATHER_KEY }}';" > lib/api_key.dart
 
       # Buildig APK
       - name: Build APK
@@ -64,7 +64,7 @@ jobs:
       - name: Check if Tag Exists
         id: check_tag
         run: |
-          if git rev-parse "v${{ env.VERSION }}" >/main/null 2>&1; then
+          if git rev-parse "v${{ env.VERSION }}" >/dev/null 2>&1; then
             echo "TAG_EXISTS=true" >> $GITHUB_ENV
           else
             echo "TAG_EXISTS=false" >> $GITHUB_ENV
