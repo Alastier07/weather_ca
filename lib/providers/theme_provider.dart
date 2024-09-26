@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-const _mainFont = 'WorkSans';
-// const _secondaryFont = 'Galdeano';
-
 class ThemeProvider extends ChangeNotifier {
+  static const _mainFont = 'WorkSans';
+  static const _isMaterial3 = true;
+
   final _appMainTheme = ThemeData(
+    useMaterial3: _isMaterial3,
     fontFamily: _mainFont,
     appBarTheme: const AppBarTheme(
       foregroundColor: Colors.black,
@@ -13,6 +14,7 @@ class ThemeProvider extends ChangeNotifier {
   );
 
   final _appDarkTheme = ThemeData(
+    useMaterial3: _isMaterial3,
     fontFamily: _mainFont,
     brightness: Brightness.dark,
   );
