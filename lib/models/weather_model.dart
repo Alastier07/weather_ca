@@ -16,6 +16,18 @@ class CurrentWeather {
   final num windKph;
   final num cloud;
   final num humidity;
+
+  factory CurrentWeather.fromJson(Map<String, dynamic> current) {
+    return CurrentWeather(
+      lastUpdate: current['last_updated'],
+      temperatureC: current['temp_c'],
+      conditionText: current['condition']['text'],
+      conditionIconUrl: current['condition']['icon'],
+      windKph: current['wind_kph'],
+      cloud: current['cloud'],
+      humidity: current['humidity'],
+    );
+  }
 }
 
 class ForeCastWeather {
@@ -38,4 +50,17 @@ class ForeCastWeather {
   final String conditionIconUrl;
   final String sunrise;
   final String sunset;
+
+  factory ForeCastWeather.fromJson(Map<String, dynamic> forecast) {
+    return ForeCastWeather(
+      date: forecast['date'],
+      averageTemperatureC: forecast['day']['avgtemp_c'],
+      maxWindKph: forecast['day']['maxwind_kph'],
+      averageHumidity: forecast['day']['avghumidity'],
+      conditionText: forecast['day']['condition']['text'],
+      conditionIconUrl: forecast['day']['condition']['icon'],
+      sunrise: forecast['astro']['sunrise'],
+      sunset: forecast['astro']['sunset'],
+    );
+  }
 }

@@ -30,42 +30,19 @@ class WeatherProvider with ChangeNotifier {
         },
       );
 
-      CurrentWeather loadedCurrent = CurrentWeather();
-      final List<ForeCastWeather> loadedForecast = [];
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
-      print(extractedData);
+      // print(extractedData);
       if (extractedData.containsKey('current') &&
           extractedData.containsKey('forecast')) {
-        final currentData = extractedData['current'];
-        final forecastDayData = extractedData['forecast']['forecastday'];
+        final currentData = extractedData['current'] as Map<String, dynamic>;
+        final forecastDayData =
+            (extractedData['forecast']['forecastday'] as List)
+                .cast<Map<String, dynamic>>();
 
-        loadedCurrent = CurrentWeather(
-          lastUpdate: currentData['last_updated'],
-          temperatureC: currentData['temp_c'],
-          conditionText: currentData['condition']['text'],
-          conditionIconUrl: currentData['condition']['icon'],
-          windKph: currentData['wind_kph'],
-          cloud: currentData['cloud'],
-          humidity: currentData['humidity'],
-        );
-
-        for (Map forecast in forecastDayData) {
-          loadedForecast.add(
-            ForeCastWeather(
-              date: forecast['date'],
-              averageTemperatureC: forecast['day']['avgtemp_c'],
-              maxWindKph: forecast['day']['maxwind_kph'],
-              averageHumidity: forecast['day']['avghumidity'],
-              conditionText: forecast['day']['condition']['text'],
-              conditionIconUrl: forecast['day']['condition']['icon'],
-              sunrise: forecast['astro']['sunrise'],
-              sunset: forecast['astro']['sunset'],
-            ),
-          );
-        }
-
-        _currentWeather = loadedCurrent;
-        _forecastWeather = loadedForecast;
+        _currentWeather = CurrentWeather.fromJson(currentData);
+        _forecastWeather = forecastDayData
+            .map<ForeCastWeather>((json) => ForeCastWeather.fromJson(json))
+            .toList();
 
         notifyListeners();
         return true;

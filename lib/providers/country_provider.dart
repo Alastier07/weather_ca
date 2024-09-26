@@ -18,25 +18,18 @@ class CountryProvider with ChangeNotifier {
 
     try {
       final response = await http.get(url);
-
-      final List<Country> loadedCountries = [];
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
 
       if (extractedData['error']) {
         throw ('Extracting Error');
-      } else {
-        for (Map country in extractedData['data']) {
-          loadedCountries.add(
-            Country(
-              countryName: country['country'],
-              countryIso: country['iso2'],
-              citiesName: country['cities'] as List,
-            ),
-          );
-        }
       }
 
-      _countries = loadedCountries;
+      final finalData =
+          (extractedData['data'] as List).cast<Map<String, dynamic>>();
+
+      _countries =
+          finalData.map<Country>((json) => Country.fromJson(json)).toList();
+
       notifyListeners();
     } catch (error) {
       print(error);
