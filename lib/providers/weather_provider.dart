@@ -25,8 +25,10 @@ class WeatherProvider with ChangeNotifier {
       final response = await http.get(
         url,
         headers: {
-          'X-RapidAPI-Key': weatherKey,
-          'X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com'
+          'Accept': 'application/json',
+          'x-rapidapi-ua': 'RapidAPI-Playground',
+          'x-rapidapi-key': weatherKey,
+          'x-rapidapi-host': 'weatherapi-com.p.rapidapi.com',
         },
       );
 
@@ -47,7 +49,7 @@ class WeatherProvider with ChangeNotifier {
         notifyListeners();
         return true;
       } else {
-        throw ('Extracting Error');
+        throw ('Extracting Error: fetchForecast');
       }
     } catch (error) {
       print(error);
