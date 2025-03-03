@@ -21,7 +21,7 @@ class CountryProvider with ChangeNotifier {
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
 
       if (extractedData['error']) {
-        throw ('Extracting Error');
+        throw ('Extracting Error: fetchCountries');
       }
 
       final finalData =
